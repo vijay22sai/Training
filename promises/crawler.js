@@ -1,6 +1,6 @@
 var request = require('request');
 
-var getLinks = (data) => {
+var getLinks = (data) => { // needs refactoring
   var neededlinks = [];
   var i = 9;
   var j = 0;
