@@ -1,6 +1,20 @@
 var request = require('request');
+var cheerio = require('cheerio');
 
-var getLinks = (data) => { // needs refactoring
+var getLinks = (data) => {
+  var $ = cheerio.load(data);
+  var links = [];
+  $('a').each((i, elem) => {
+    var relativeUrl = $(elem).attr('href');
+    if (!relativeUrl.startsWith('http')) {
+      relativeUrl = baseUrl + relativeUrl;
+    }
+    links.push(relativeUrl);
+  });
+  return links;
+};
+
+var getLinksOld = (data) => { // needs refactoring
   var neededlinks = [];
   var i = 9;
   var j = 0;
@@ -70,3 +84,5 @@ requestP(baseUrl)
   .catch((err) => {
     // do something with the error
   });
+
+// requestP(baseUrl).then(getLinksWithCheerio);
